@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiki Santoso - Personal Microsite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --dark-color: #1f2937;
+            --light-color: #f9fafb;
+            --gray-color: #6b7280;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            background-color: #f3f4f6;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 1rem;
+        }
+        
+        .profile-name {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-title {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Sections */
+        section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            font-size: 1.8rem;
+        }
+        
+        /* About */
+        .about-content {
+            font-size: 1.1rem;
+            color: var(--dark-color);
+        }
+        
+        /* Experience & Education */
+        .timeline-item {
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1.5rem;
+            padding-bottom: 2rem;
+            position: relative;
+        }
+        
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+        }
+        
+        .timeline-date {
+            background-color: #dbeafe;
+            color: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-subtitle {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-location {
+            color: var(--gray-color);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .timeline-description {
+            color: var(--dark-color);
+        }
+        
+        /* Skills */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .skill-item {
+            background-color: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .skill-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .skill-level {
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            margin-top: 0.75rem;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .social-link {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s, color 0.3s;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-3px);
+            color: #93c5fd;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-name {
+                font-size: 2rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+            
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Cookie Notice */
+        .cookie-notice {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--dark-color);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .cookie-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .cookie-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-weight: 600;
+        }
+        
+        .cookie-accept {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .cookie-decline {
+            background-color: #4b5563;
+            color: white;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header dengan profil -->
+    <header>
+        <div class="container">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Foto Kiki Santoso" class="profile-img">
+            <h1 class="profile-name">Kiki Santoso</h1>
+            <p class="profile-title">Lulusan TJKT | Admin dan Teknisi Komputer</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>********@***** ************</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Surakarta, Indonesia</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Tentang Saya -->
+        <section id="about">
+            <h2 class="section-title">Tentang Saya</h2>
+            <div class="about-content">
+                <p>Saya seorang lulusan TJKT (Teknik Jaringan Komputer dan Telekomunikasi) dari SMKN 1 Giritontro dengan minat dan pengalaman dalam bidang administrasi dan teknologi komputer/laptop.</p>
+                <p>Saya memiliki pengalaman praktik kerja industri (PKL) sebagai Admin dan Teknisi di Vanjava Computer Surakarta. Saya memiliki kemampuan problem-solving yang baik, dapat bekerja secara mandiri maupun dalam tim, serta selalu ingin mempelajari teknologi terbaru di bidang IT.</p>
+            </div>
+        </section>
+
+        <!-- Pengalaman Kerja -->
+        <section id="experience">
+            <h2 class="section-title">Pengalaman Kerja</h2>
+            
+            <div class="timeline-item">
+                <span class="timeline-date">Mei 2025 - September 2025</span>
+                <h3 class="timeline-title">Vanjava Computer</h3>
+                <p class="timeline-subtitle">Admin dan Teknisi</p>
+                <div class="timeline-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Surakarta</span>
+                </div>
+                <p class="timeline-description">
+                    Saya adalah seorang PKL (Praktik Kerja Industri) di Vanjava Computer dengan keahlian dalam bidang Admin dan Teknisi Komputer/Laptop. Bertanggung jawab dalam maintenance hardware dan software, troubleshooting masalah teknis, serta administrasi sistem.
+                </p>
+            </div>
+            
+            <div class="timeline-item">
+                <span class="timeline-date">Januari 2024 - April 2024</span>
+                <h3 class="timeline-title">Freelance IT Support</h3>
+                <p class="timeline-subtitle">Teknisi Lepas</p>
+                <div class="timeline-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Wonogiri</span>
+                </div>
+                <p class="timeline-description">
+                    Membantu perorangan dan usaha kecil dalam pemecahan masalah IT, instalasi software, perakitan komputer, dan maintenance perangkat keras.
+                </p>
+            </div>
+        </section>
+
+        <!-- Pendidikan -->
+        <section id="education">
+            <h2 class="section-title">Pendidikan</h2>
+            
+            <div class="timeline-item">
+                <span class="timeline-date">Juni 2023 - April 2026</span>
+                <h3 class="timeline-title">SMKN 1 Giritontro</h3>
+                <p class="timeline-subtitle">Teknik Jaringan Komputer dan Telekomunikasi (TJKT)</p>
+                <div class="timeline-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Wonogiri, Jawa Tengah</span>
+                </div>
+                <p class="timeline-description">
+                    IPK: 9.9/10. Fokus studi meliputi jaringan komputer, administrasi sistem, keamanan jaringan, dan pemrograman dasar.
+                </p>
+            </div>
+        </section>
+
+        <!-- Keterampilan -->
+        <section id="skills">
+            <h2 class="section-title">Keterampilan</h2>
+            
+            <div class="skills-container">
+                <div class="skill-item">
+                    <p class="skill-name">Teknisi Komputer/Laptop</p>
+                    <p>Perakitan, maintenance, troubleshooting hardware dan software.</p>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 90%"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <p class="skill-name">Administrasi Sistem</p>
+                    <p>Manajemen user, backup data, monitoring sistem.</p>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 85%"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <p class="skill-name">Bahasa Inggris</p>
+                    <p>Memiliki keterampilan berbahasa Inggris level Entry-Intermediate.</p>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 75%"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <p class="skill-name">Jaringan Komputer</p>
+                    <p>Konfigurasi jaringan dasar, troubleshooting konektivitas.</p>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 80%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Kiki Santoso. Semua hak dilindungi.</p>
+            
+            <div class="social-links">
+                <a href="#" class="social-link">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            
+            <p>Hubungi saya untuk peluang kerja sama atau proyek IT.</p>
+        </div>
+    </footer>
+
+    <!-- Cookie Notice -->
+    <div id="cookieNotice" class="cookie-notice">
+        <div>
+            <p><strong>🍪 Kami menggunakan cookies</strong></p>
+            <p>Website ini menggunakan cookies penting untuk memastikan fungsionalitasnya dengan baik.</p>
+        </div>
+        <div class="cookie-buttons">
+            <button id="declineCookie" class="cookie-btn cookie-decline">Tolak</button>
+            <button id="acceptCookie" class="cookie-btn cookie-accept">Terima</button>
+        </div>
+    </div>
+
+    <script>
+        // Cookie Notice Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const cookieNotice = document.getElementById('cookieNotice');
+            const acceptBtn = document.getElementById('acceptCookie');
+            const declineBtn = document.getElementById('declineCookie');
+            
+            // Cek jika user sudah memilih preference cookie
+            const cookiePreference = localStorage.getItem('cookiePreference');
+            
+            if (cookiePreference) {
+                cookieNotice.classList.add('hidden');
+            }
+            
+            // Handler untuk terima cookie
+            acceptBtn.addEventListener('click', function() {
+                localStorage.setItem('cookiePreference', 'accepted');
+                cookieNotice.classList.add('hidden');
+                alert('Terima kasih! Preferensi cookie telah disimpan.');
+            });
+            
+            // Handler untuk tolak cookie
+            declineBtn.addEventListener('click', function() {
+                localStorage.setItem('cookiePreference', 'declined');
+                cookieNotice.classList.add('hidden');
+                alert('Preferensi cookie telah disimpan. Cookies pelacakan tidak akan digunakan.');
+            });
+            
+            // Animasi sederhana untuk timeline items
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Terapkan animasi pada timeline items
+            timelineItems.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(item);
+            });
+        });
+    </script>
+</body>
+</html>
