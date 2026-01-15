@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisan AI - Local Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS untuk local storage */
+        .image-card { transition: transform 0.3s; }
+        .image-card:hover { transform: scale(1.02); }
+    </style>
+</head>
+<body class="bg-gray-900 text-white p-4">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold mb-2">🤖 Kisan AI Generator (Local)</h1>
+            <p class="text-gray-400">Generate gambar AI langsung dari browser • Untuk penggunaan pribadi</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Input Panel -->
+            <div class="bg-gray-800 p-6 rounded-xl">
+                <h2 class="text-xl font-bold mb-4">🎨 Generate Image</h2>
+                
+                <!-- Prompt Input -->
+                <div class="mb-4">
+                    <label class="block mb-2">Prompt:</label>
+                    <textarea id="promptInput" 
+                              class="w-full h-32 p-3 bg-gray-700 rounded-lg"
+                              placeholder="Contoh: cyberpunk cat with neon lights"></textarea>
+                </div>
+                
+                <!-- API Key (SIMPAN LOCAL SAJA) -->
+                <div class="mb-4">
+                    <label class="block mb-2">API Key (simpan di browser):</label>
+                    <input type="password" id="apiKey" 
+                           class="w-full p-3 bg-gray-700 rounded-lg"
+                           placeholder="Masukkan API key Anda">
+                    <button onclick="saveApiKey()" class="mt-2 px-3 py-1 bg-blue-600 rounded text-sm">
+                        Simpan Key
+                    </button>
+                    <p class="text-sm text-gray-400 mt-1">Key disimpan di localStorage browser Anda</p>
+                </div>
+                
+                <!-- Settings -->
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block mb-2">Model:</label>
+                        <select id="modelSelect" class="w-full p-2 bg-gray-700 rounded">
+                            <option value="stable-diffusion">Stable Diffusion</option>
+                            <option value="midjourney">Midjourney (via API)</option>
+                            <option value="dalle">DALL-E 3</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Resolution:</label>
+                        <select id="resolution" class="w-full p-2 bg-gray-700 rounded">
+                            <option value="512x512">512x512</option>
+                            <option value="768x768">768x768</option>
+                            <option value="1024x1024">1024x1024</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Generate Button -->
+                <button onclick="generateImage()" 
+                        class="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold mb-4">
+                    🚀 GENERATE NOW
+                </button>
+                
+                <!-- Progress Bar -->
+                <div id="progressContainer" class="hidden">
+                    <div class="flex justify-between mb-1">
+                        <span>Generating...</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-700 h-2 rounded-full">
+                        <div id="progressBar" class="bg-green-500 h-2 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output Panel -->
+            <div class="bg-gray-800 p-6 rounded-xl">
+                <h2 class="text-xl font-bold mb-4">🖼️ Output</h2>
+                
+                <!-- Image Display -->
+                <div class="border-2 border-dashed border-gray-600 rounded-lg h-64 mb-4 flex items-center justify-center bg-gray-900">
+                    <img id="outputImage" class="max-w-full max-h-full hidden">
+                    <div id="placeholderText" class="text-gray-500 text-center">
+                        <div class="text-4xl mb-2">🖼️</div>
+                        <p>Gambar akan muncul di sini</p>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="downloadImage()" 
+                            id="downloadBtn" 
+                            class="py-2 bg-green-600 rounded-lg hidden">
+                        💾 Download
+                    </button>
+                    <button onclick="saveToLocalGallery()" 
+                            id="saveGalleryBtn" 
+                            class="py-2 bg-blue-600 rounded-lg hidden">
+                        📁 Save to Gallery
+                    </button>
+                    <button onclick="clearImage()" 
+                            class="py-2 bg-red-600 rounded-lg">
+                        ❌ Clear
+                    </button>
+                    <button onclick="copyToClipboard()" 
+                            id="copyBtn" 
+                            class="py-2 bg-yellow-600 rounded-lg hidden">
+                        📋 Copy Image
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Local Gallery -->
+        <div class="mt-8 bg-gray-800 p-6 rounded-xl">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">📚 Local Gallery</h2>
+                <div>
+                    <button onclick="loadLocalGallery()" class="px-4 py-2 bg-blue-600 rounded-lg mr-2">
+                        🔄 Refresh
+                    </button>
+                    <button onclick="exportGallery()" class="px-4 py-2 bg-green-600 rounded-lg">
+                        📤 Export All
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Gallery Grid -->
+            <div id="galleryGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- Images loaded from localStorage -->
+            </div>
+            
+            <div class="mt-4 text-sm text-gray-400">
+                <p>💡 Gallery disimpan di browser Anda (localStorage/IndexedDB). Data TIDAK dikirim ke cloud.</p>
+            </div>
+        </div>
+
+        <!-- Footer Info -->
+        <div class="mt-8 text-center text-gray-400 text-sm">
+            <p>🔒 <strong>PRIVACY INFO:</strong> Semua data tetap di browser Anda. Tidak ada server, tidak ada cloud storage.</p>
+            <p>⚠️ <strong>PERINGATAN:</strong> API key terlihat di browser. Gunakan hanya untuk pribadi!</p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
