@@ -1,158 +1,702 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en" id="main-html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kisan AI - Local Generator</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Kiki Santoso - Professional CV</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Custom CSS untuk local storage */
-        .image-card { transition: transform 0.3s; }
-        .image-card:hover { transform: scale(1.02); }
+        /* Cryptography-themed color palette */
+        :root {
+            --primary-dark: #0a192f;      /* Dark blue background */
+            --secondary-dark: #112240;     /* Slightly lighter dark */
+            --primary-accent: #64ffda;     /* Teal accent (crypto theme) */
+            --secondary-accent: #52d1b2;   /* Lighter teal */
+            --text-primary: #e6f1ff;       /* Light text */
+            --text-secondary: #8892b0;     /* Grayish text */
+            --border-color: #233554;       /* Border color */
+            --card-bg: rgba(17, 34, 64, 0.7); /* Card background */
+            --shadow-color: rgba(2, 12, 27, 0.7);
+        }
+
+        /* Light theme variables */
+        .light-theme {
+            --primary-dark: #f8f9fa;
+            --secondary-dark: #e9ecef;
+            --primary-accent: #2a9d8f;
+            --secondary-accent: #264653;
+            --text-primary: #212529;
+            --text-secondary: #495057;
+            --border-color: #dee2e6;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto Mono', monospace;
+            background-color: var(--primary-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header and Navigation */
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--primary-dark);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-accent);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .language-switcher {
+            display: flex;
+            background-color: var(--secondary-dark);
+            border-radius: 20px;
+            padding: 3px;
+            border: 1px solid var(--border-color);
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 17px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background-color: var(--primary-accent);
+            color: var(--primary-dark);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--secondary-dark);
+        }
+
+        /* Main Content */
+        main {
+            padding: 40px 0;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            margin-bottom: 60px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .profile-image {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid var(--primary-accent);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            position: relative;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .profile-image:hover img {
+            transform: scale(1.03);
+        }
+
+        .profile-image::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--primary-accent);
+            border-radius: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .profile-image:hover::after {
+            opacity: 0.5;
+        }
+
+        .hero-text h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .hero-text .title {
+            font-size: 1.4rem;
+            color: var(--primary-accent);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .hero-text .description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: transform 0.3s;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            color: var(--primary-accent);
+        }
+
+        .section-title i {
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        /* Education and Experience Items */
+        .timeline-item {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+
+        .timeline-period {
+            color: var(--primary-accent);
+            font-weight: 500;
+            background-color: rgba(100, 255, 218, 0.1);
+            padding: 4px 10px;
+            border-radius: 15px;
+        }
+
+        .timeline-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .timeline-description {
+            color: var(--text-secondary);
+        }
+
+        /* Skills */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-category {
+            margin-bottom: 20px;
+        }
+
+        .skill-category h3 {
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .skill-list {
+            list-style-type: none;
+        }
+
+        .skill-list li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .skill-list li:before {
+            content: "{ }";
+            position: absolute;
+            left: 0;
+            color: var(--primary-accent);
+            font-weight: bold;
+        }
+
+        /* Certificates */
+        .certificate-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: rgba(100, 255, 218, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-accent);
+        }
+
+        .certificate-item i {
+            font-size: 1.8rem;
+            color: var(--primary-accent);
+            margin-right: 15px;
+        }
+
+        /* Closing Section */
+        .closing-section {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .closing-section p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            color: var(--text-secondary);
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+        }
+
+        .contact-item i {
+            margin-right: 10px;
+            color: var(--primary-accent);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-crypto {
+            color: var(--primary-accent);
+            letter-spacing: 2px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Language-specific styles */
+        .lang-id { display: none; }
+        .lang-en { display: block; }
+
+        /* Animation for cryptographic elements */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .crypto-element {
+            animation: blink 3s infinite;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .timeline-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .timeline-period {
+                margin-top: 5px;
+            }
+            
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .nav-controls, .theme-toggle {
+                display: none;
+            }
+            
+            .section {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
     </style>
 </head>
-<body class="bg-gray-900 text-white p-4">
-    <div class="max-w-6xl mx-auto">
-        <!-- Header -->
-        <header class="text-center mb-8">
-            <h1 class="text-3xl font-bold mb-2">🤖 Kisan AI Generator (Local)</h1>
-            <p class="text-gray-400">Generate gambar AI langsung dari browser • Untuk penggunaan pribadi</p>
-        </header>
-
-        <!-- Main Content -->
-        <div class="grid md:grid-cols-2 gap-6">
-            <!-- Input Panel -->
-            <div class="bg-gray-800 p-6 rounded-xl">
-                <h2 class="text-xl font-bold mb-4">🎨 Generate Image</h2>
-                
-                <!-- Prompt Input -->
-                <div class="mb-4">
-                    <label class="block mb-2">Prompt:</label>
-                    <textarea id="promptInput" 
-                              class="w-full h-32 p-3 bg-gray-700 rounded-lg"
-                              placeholder="Contoh: cyberpunk cat with neon lights"></textarea>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-code"></i>
+                    <span class="crypto-element">K.Santoso</span>
                 </div>
                 
-                <!-- API Key (SIMPAN LOCAL SAJA) -->
-                <div class="mb-4">
-                    <label class="block mb-2">API Key (simpan di browser):</label>
-                    <input type="password" id="apiKey" 
-                           class="w-full p-3 bg-gray-700 rounded-lg"
-                           placeholder="Masukkan API key Anda">
-                    <button onclick="saveApiKey()" class="mt-2 px-3 py-1 bg-blue-600 rounded text-sm">
-                        Simpan Key
-                    </button>
-                    <p class="text-sm text-gray-400 mt-1">Key disimpan di localStorage browser Anda</p>
-                </div>
-                
-                <!-- Settings -->
-                <div class="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label class="block mb-2">Model:</label>
-                        <select id="modelSelect" class="w-full p-2 bg-gray-700 rounded">
-                            <option value="stable-diffusion">Stable Diffusion</option>
-                            <option value="midjourney">Midjourney (via API)</option>
-                            <option value="dalle">DALL-E 3</option>
-                        </select>
+                <div class="nav-controls">
+                    <div class="language-switcher">
+                        <button class="lang-btn active" id="btn-en">EN</button>
+                        <button class="lang-btn" id="btn-id">ID</button>
                     </div>
-                    <div>
-                        <label class="block mb-2">Resolution:</label>
-                        <select id="resolution" class="w-full p-2 bg-gray-700 rounded">
-                            <option value="512x512">512x512</option>
-                            <option value="768x768">768x768</option>
-                            <option value="1024x1024">1024x1024</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <!-- Generate Button -->
-                <button onclick="generateImage()" 
-                        class="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold mb-4">
-                    🚀 GENERATE NOW
-                </button>
-                
-                <!-- Progress Bar -->
-                <div id="progressContainer" class="hidden">
-                    <div class="flex justify-between mb-1">
-                        <span>Generating...</span>
-                        <span id="progressPercent">0%</span>
-                    </div>
-                    <div class="w-full bg-gray-700 h-2 rounded-full">
-                        <div id="progressBar" class="bg-green-500 h-2 rounded-full" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Output Panel -->
-            <div class="bg-gray-800 p-6 rounded-xl">
-                <h2 class="text-xl font-bold mb-4">🖼️ Output</h2>
-                
-                <!-- Image Display -->
-                <div class="border-2 border-dashed border-gray-600 rounded-lg h-64 mb-4 flex items-center justify-center bg-gray-900">
-                    <img id="outputImage" class="max-w-full max-h-full hidden">
-                    <div id="placeholderText" class="text-gray-500 text-center">
-                        <div class="text-4xl mb-2">🖼️</div>
-                        <p>Gambar akan muncul di sini</p>
-                    </div>
-                </div>
-                
-                <!-- Action Buttons -->
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="downloadImage()" 
-                            id="downloadBtn" 
-                            class="py-2 bg-green-600 rounded-lg hidden">
-                        💾 Download
-                    </button>
-                    <button onclick="saveToLocalGallery()" 
-                            id="saveGalleryBtn" 
-                            class="py-2 bg-blue-600 rounded-lg hidden">
-                        📁 Save to Gallery
-                    </button>
-                    <button onclick="clearImage()" 
-                            class="py-2 bg-red-600 rounded-lg">
-                        ❌ Clear
-                    </button>
-                    <button onclick="copyToClipboard()" 
-                            id="copyBtn" 
-                            class="py-2 bg-yellow-600 rounded-lg hidden">
-                        📋 Copy Image
+                    <button class="theme-toggle" id="theme-toggle">
+                        <i class="fas fa-moon"></i>
                     </button>
                 </div>
             </div>
         </div>
+    </header>
 
-        <!-- Local Gallery -->
-        <div class="mt-8 bg-gray-800 p-6 rounded-xl">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold">📚 Local Gallery</h2>
+    <main class="container">
+        <!-- Hero/Profile Section -->
+        <section class="hero-section">
+            <div class="profile-image">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Kiki Santoso">
+            </div>
+            
+            <div class="hero-text">
+                <h1>Kiki Santoso</h1>
+                <div class="title lang-en">Computer Network & Telecommunications Technician</div>
+                <div class="title lang-id" style="display: none;">Teknisi Jaringan Komputer & Telekomunikasi</div>
+                
+                <div class="description lang-en">
+                    SMK graduate in Computer Network and Telecommunications Engineering with interest in information technology and customer service. Possesses discipline, responsibility, and good communication skills. Experienced in working independently or in teams with a strong desire to continuously learn new things.
+                </div>
+                <div class="description lang-id" style="display: none;">
+                    Lulusan SMK jurusan Teknik Jaringan Komputer dan Telekomunikasi (TJKT) yang memiliki minat di bidang teknologi informasi dan pelayanan. Memiliki sikap disiplin, bertanggung jawab, serta mampu berkomunikasi dengan baik. Terbiasa bekerja secara mandiri maupun dalam tim dan memiliki keinginan kuat untuk terus belajar hal baru.
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section class="section">
+            <div class="section-title">
+                <i class="fas fa-graduation-cap"></i>
+                <h2 class="lang-en">Education</h2>
+                <h2 class="lang-id" style="display: none;">Pendidikan</h2>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div class="timeline-title lang-en">Vocational High School (SMK)</div>
+                    <div class="timeline-title lang-id" style="display: none;">Sekolah Menengah Kejuruan (SMK)</div>
+                    <div class="timeline-period">2023 – 2026</div>
+                </div>
+                <div class="timeline-subtitle lang-en">Computer Network & Telecommunications Engineering (TJKT)</div>
+                <div class="timeline-subtitle lang-id" style="display: none;">Teknik Jaringan Komputer dan Telekomunikasi (TJKT)</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div class="timeline-title lang-en">Junior High School (SMP)</div>
+                    <div class="timeline-title lang-id" style="display: none;">Sekolah Menengah Pertama (SMP)</div>
+                    <div class="timeline-period">2020 – 2023</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work Experience Section -->
+        <section class="section">
+            <div class="section-title">
+                <i class="fas fa-briefcase"></i>
+                <h2 class="lang-en">Work Experience</h2>
+                <h2 class="lang-id" style="display: none;">Pengalaman Kerja</h2>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div class="timeline-title">Vanjava Computer – Solo</div>
+                    <div class="timeline-period">2024 – Present</div>
+                </div>
+                <div class="timeline-subtitle lang-en">Administrator & Laptop/Computer Service Technician</div>
+                <div class="timeline-subtitle lang-id" style="display: none;">Admin & Teknisi Servis Laptop/Komputer</div>
+                
+                <div class="timeline-description">
+                    <ul class="skill-list">
+                        <li class="lang-en">Serving customers and providing technical support</li>
+                        <li class="lang-id" style="display: none;">Melayani pelanggan dan memberikan dukungan teknis</li>
+                        
+                        <li class="lang-en">Managing service data administration and transactions</li>
+                        <li class="lang-id" style="display: none;">Mengelola administrasi data servis dan transaksi</li>
+                        
+                        <li class="lang-en">Installing operating systems and applications</li>
+                        <li class="lang-id" style="display: none;">Melakukan instalasi sistem operasi dan aplikasi</li>
+                        
+                        <li class="lang-en">Diagnosing and repairing laptop and computer damage</li>
+                        <li class="lang-id" style="display: none;">Mendiagnosis serta memperbaiki kerusakan laptop dan komputer</li>
+                        
+                        <li class="lang-en">Performing device maintenance and checks</li>
+                        <li class="lang-id" style="display: none;">Melakukan perawatan dan pengecekan perangkat</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="section">
+            <div class="section-title">
+                <i class="fas fa-cogs"></i>
+                <h2 class="lang-en">Skills & Competencies</h2>
+                <h2 class="lang-id" style="display: none;">Keahlian & Kompetensi</h2>
+            </div>
+            
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3 class="lang-en">Professional</h3>
+                    <h3 class="lang-id" style="display: none;">Profesional</h3>
+                    <ul class="skill-list">
+                        <li class="lang-en">Good communication skills</li>
+                        <li class="lang-id" style="display: none;">Kemampuan komunikasi yang baik</li>
+                        
+                        <li class="lang-en">Able to work independently or in teams</li>
+                        <li class="lang-id" style="display: none;">Mampu bekerja secara mandiri maupun dalam tim</li>
+                        
+                        <li class="lang-en">Responsible and disciplined</li>
+                        <li class="lang-id" style="display: none;">Bertanggung jawab dan disiplin</li>
+                        
+                        <li class="lang-en">Quick learner and easily adaptable</li>
+                        <li class="lang-id" style="display: none;">Cepat belajar dan mudah beradaptasi</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-category">
+                    <h3 class="lang-en">Technical</h3>
+                    <h3 class="lang-id" style="display: none;">Teknis</h3>
+                    <ul class="skill-list">
+                        <li class="lang-en">Basic laptop and computer repair</li>
+                        <li class="lang-id" style="display: none;">Dasar servis laptop dan komputer</li>
+                        
+                        <li class="lang-en">Basic administration and customer service</li>
+                        <li class="lang-id" style="display: none;">Dasar administrasi dan pelayanan pelanggan</li>
+                        
+                        <li class="lang-en">Computer network fundamentals</li>
+                        <li class="lang-id" style="display: none;">Dasar-dasar jaringan komputer</li>
+                        
+                        <li class="lang-en">Operating system installation</li>
+                        <li class="lang-id" style="display: none;">Instalasi sistem operasi</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certificates Section -->
+        <section class="section">
+            <div class="section-title">
+                <i class="fas fa-certificate"></i>
+                <h2 class="lang-en">Certificates</h2>
+                <h2 class="lang-id" style="display: none;">Sertifikat</h2>
+            </div>
+            
+            <div class="certificate-item">
+                <i class="fas fa-award"></i>
                 <div>
-                    <button onclick="loadLocalGallery()" class="px-4 py-2 bg-blue-600 rounded-lg mr-2">
-                        🔄 Refresh
-                    </button>
-                    <button onclick="exportGallery()" class="px-4 py-2 bg-green-600 rounded-lg">
-                        📤 Export All
-                    </button>
+                    <h3>English Proficiency Test (EPT) Certificate</h3>
+                    <p class="lang-en">Validated English language proficiency</p>
+                    <p class="lang-id" style="display: none;">Sertifikasi kemampuan bahasa Inggris</p>
                 </div>
             </div>
-            
-            <!-- Gallery Grid -->
-            <div id="galleryGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                <!-- Images loaded from localStorage -->
-            </div>
-            
-            <div class="mt-4 text-sm text-gray-400">
-                <p>💡 Gallery disimpan di browser Anda (localStorage/IndexedDB). Data TIDAK dikirim ke cloud.</p>
-            </div>
-        </div>
+        </section>
 
-        <!-- Footer Info -->
-        <div class="mt-8 text-center text-gray-400 text-sm">
-            <p>🔒 <strong>PRIVACY INFO:</strong> Semua data tetap di browser Anda. Tidak ada server, tidak ada cloud storage.</p>
-            <p>⚠️ <strong>PERINGATAN:</strong> API key terlihat di browser. Gunakan hanya untuk pribadi!</p>
-        </div>
-    </div>
+        <!-- Closing Section -->
+        <section class="section closing-section">
+            <p class="lang-en">I am ready to work with full responsibility, continuously develop my abilities, and provide the best contribution to the company.</p>
+            <p class="lang-id" style="display: none;">Saya siap bekerja dengan penuh tanggung jawab, terus mengembangkan kemampuan, serta memberikan kontribusi terbaik bagi perusahaan.</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Solo, Central Java, Indonesia</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>kiki.santoso@example.com</span>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <!-- JavaScript -->
-    <script src="app.js"></script>
+    <footer>
+        <div class="container">
+            <p class="lang-en">© 2023 Kiki Santoso. All rights reserved.</p>
+            <p class="lang-id" style="display: none;">© 2023 Kiki Santoso. Hak cipta dilindungi.</p>
+            <div class="footer-crypto">CV-ENCRYPTED#64FFDA</div>
+        </div>
+    </footer>
+
+    <script>
+        // Language switching functionality
+        document.getElementById('btn-en').addEventListener('click', function() {
+            switchLanguage('en');
+        });
+        
+        document.getElementById('btn-id').addEventListener('click', function() {
+            switchLanguage('id');
+        });
+        
+        function switchLanguage(lang) {
+            // Update active button
+            document.getElementById('btn-en').classList.remove('active');
+            document.getElementById('btn-id').classList.remove('active');
+            document.getElementById(`btn-${lang}`).classList.add('active');
+            
+            // Show/hide language-specific content
+            const enElements = document.querySelectorAll('.lang-en');
+            const idElements = document.querySelectorAll('.lang-id');
+            
+            if (lang === 'en') {
+                enElements.forEach(el => el.style.display = 'block');
+                idElements.forEach(el => el.style.display = 'none');
+            } else {
+                enElements.forEach(el => el.style.display = 'none');
+                idElements.forEach(el => el.style.display = 'block');
+            }
+        }
+        
+        // Theme switching functionality
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            const htmlElement = document.getElementById('main-html');
+            const icon = this.querySelector('i');
+            
+            if (htmlElement.classList.contains('light-theme')) {
+                htmlElement.classList.remove('light-theme');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            } else {
+                htmlElement.classList.add('light-theme');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        });
+        
+        // Add subtle animation to sections when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(section);
+        });
+        
+        // Initialize with English language
+        switchLanguage('en');
+    </script>
 </body>
 </html>
